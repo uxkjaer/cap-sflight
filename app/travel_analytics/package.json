@@ -8,9 +8,9 @@
     "node": ">=18"
   },
   "scripts": {
-    "build:cf": "ui5 build preload --clean-dest --include-task=generateCachebusterInfo",
+    "build": "ui5 build preload --clean-dest --include-task=generateCachebusterInfo",
     "start": "ui5 serve",
-    "postbuild:cf": "turbo run versionbump && npm run copyToGenApp",
+    "postbuild": "turbo run versionbump && npm run copyToGenApp",
     "test": "npm run test:node && npm run test:java",
     "test:java": "karma start --server=java --single-run",
     "test:node": "karma start --server=node --single-run",

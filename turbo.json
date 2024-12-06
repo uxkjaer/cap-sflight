@@ -1,10 +1,10 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
-    "build:cf":{
+    "build":{
       "inputs": [],
       "cache": true,
-      "dependsOn": ["^build:cf"],
+      "dependsOn": ["^build"],
       "outputLogs": "new-only"
     },
    
@@ -23,7 +23,7 @@
     },
     "//#deploy-app": {
       "inputs": ["app-deployer/gen/app/**"],
-      "dependsOn": ["travel-processor#build:cf", "travel-analytics#build:cf"],
+      "dependsOn": ["travel-processor#build", "travel-analytics#build"],
       "outputs": ["app-deployer/mta_archives/**"],
       "cache": true,
       "outputLogs": "new-only"
