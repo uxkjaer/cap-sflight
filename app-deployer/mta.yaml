@@ -1,0 +1,38 @@
+ID: capire.sflight_app_deployer
+_schema-version: 3.3.0
+version: 1.0.0
+
+modules:
+  - name: sflight-appcontent
+    type: com.sap.application.content
+    path: gen
+    requires:
+      - name: sflight-destination-service
+      - name: sflight-html5-repo-host
+        parameters:
+          content-target: true
+    build-parameters:
+      build-result: app/
+
+resources:
+  # ------------------------------------------------------------
+  - name: sflight-html5-repo-host
+  # ------------------------------------------------------------
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-host
+
+  # ------------------------------------------------------------
+  - name: sflight-destination-service
+  # ------------------------------------------------------------
+    type: org.cloudfoundry.managed-service
+
+    parameters:
+      service: destination
+      service-plan: lite
+      config:
+        version: 1.0.0
+        HTML5Runtime_enabled: true
+
+

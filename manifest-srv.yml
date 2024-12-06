@@ -1,0 +1,29 @@
+#Manifest file for the main instance in space: sap-events
+
+# https://docs.cloudfoundry.org/devguide/deploy-apps/manifest-attributes.html
+# Services named here need to be created on our CF space
+---
+parameters:
+  # deploy_mode: html5-repo
+  enable-parallel-deployments: true
+applications:
+  - name: sflight-srv
+    type: nodejs
+    path: gen/srv
+    timeout: 600
+    default-route: true
+    memory: 512MB
+    stack: cflinuxfs4
+    buildpack: nodejs_buildpack
+    services:
+    - sflight-db
+    - sflight-uaa
+    parameters:
+      readiness-health-check-http-endpoint: /health
+      readiness-health-check-type: http
+    build-parameters:
+      builder: npm
+      ignore:
+      - default-env.json
+      - node_modules
+    

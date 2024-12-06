@@ -1,0 +1,57 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "build:cf":{
+      "inputs": [],
+      "cache": true,
+      "dependsOn": ["^build:cf"],
+      "outputLogs": "new-only"
+    },
+   
+    "//#buildCDS": {
+      "inputs": ["srv/**", "db/**"],
+      "outputs": ["gen/db/**", "gen/srv/**"],
+      "cache": true,
+      "outputLogs": "new-only"
+    },
+    "//#deploy-db": {
+      "inputs": ["db/**"],
+      "outputs": ["gen/db/**"],
+      "cache": true,
+      "dependsOn": ["//#buildCDS"],
+      "outputLogs": "new-only"
+    },
+    "//#deploy-app": {
+      "inputs": ["app-deployer/gen/app/**"],
+      "dependsOn": ["travel-processor#build:cf", "travel-analytics#build:cf"],
+      "outputs": ["app-deployer/mta_archives/**"],
+      "cache": true,
+      "outputLogs": "new-only"
+    },
+    "//#deploy-srv": {
+      "inputs": ["srv/**"],
+      "dependsOn": ["//#buildCDS"],
+      "outputs": ["gen/srv/**"],
+      "cache": true,
+      "outputLogs": "new-only"
+    },
+
+    "//#buildMBT": {
+      "inputs": ["srv", "db", "app"],
+      "outputs": ["gen"],
+      "dependsOn": ["//#removeMTA"],
+      "cache": true,
+      "outputLogs": "new-only"
+    },
+    "//#removeMTA": {
+      "inputs": ["srv", "db"],
+      "outputs": ["gen"],
+      "cache": true,
+      "outputLogs": "new-only"
+    },
+    "dev": {
+      "persistent": true,
+      "cache": true
+    }
+  }
+}

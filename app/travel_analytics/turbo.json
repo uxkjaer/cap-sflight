@@ -1,0 +1,34 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  
+  "tasks": {
+    "build:cf":{
+      "inputs": ["webapp"],
+      "outputs": ["dist"],
+
+      "cache": true,
+      "dependsOn": ["ts-typecheck"],
+      "outputLogs": "new-only"
+    },
+   "versionbump": {
+    "inputs": ["webapp"],
+    "outputs": [],
+    "cache": true,
+
+    "outputLogs": "new-only"
+   },
+    "ts-typecheck": {
+     "inputs": ["**/*.{ts,tsx}"],
+      "outputs": [],
+
+      "cache": true,
+      "dependsOn": [],
+      "outputLogs": "new-only"
+    },
+    "dev": {
+      "persistent": true,
+      "cache": true
+    }
+  },
+  "extends": ["//"]
+}

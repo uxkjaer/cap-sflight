@@ -1,0 +1,17 @@
+{
+  "name": "app-deployer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node node_modules/@sap/html5-app-deployer/index.js",
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
+    "build": "rimraf mta_archives && mbt build --mtar archive"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@sap/html5-app-deployer": "^6.4.3"
+  }
+}

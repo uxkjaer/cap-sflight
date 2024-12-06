@@ -1,0 +1,27 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  
+  "tasks": {
+    "build":{
+      "inputs": ["gen"],
+      "outputs": ["mta_archives/archive.mtar"],
+
+      "cache": true,
+      "dependsOn": [],
+      "outputLogs": "new-only"
+    },
+   "deploy": {
+    "inputs": ["mta_archives/archive.mtar"],
+    "outputs": [],
+    "cache": true,
+    "dependsOn": ["build"],
+    "outputLogs": "new-only"
+   },
+   
+    "dev": {
+      "persistent": true,
+      "cache": true
+    }
+  },
+  "extends": ["//"]
+}

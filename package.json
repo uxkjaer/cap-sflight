@@ -13,8 +13,16 @@
     "start": "cds-serve",
     "test": "jest",
     "test:mocha": "npx -y mocha",
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
+    "predeploy": "npm run build",
     "travel-processor": "cds-tsx watch --open sap.fe.cap.travel/index.html?sap-ui-xx-viewCache=false",
-    "travel-analytics": "cds-tsx watch --open sap.fe.cap.travel_analytics/index.html?sap-ui-xx-viewCache=false"
+    "travel-analytics": "cds-tsx watch --open sap.fe.cap.travel_analytics/index.html?sap-ui-xx-viewCache=false",
+    "buildCDS": " npx -p @sap/cds-dk cds build --profile production,node",
+    "deploy-db": "cf push -f manifest-db.yml ",
+    "deploy-app": "npm run deploy --workspace=app-deployer",
+    "deploy-srv": "cf push -f manifest-srv.yml",
+    "deployTurbo": "turbo run deploy-db deploy-srv app-deployer#deploy",
+    "buildApps": "npm run build:cf --workspaces --if-present"
   },
   "dependencies": {
     "@cap-js/hana": "^1",
@@ -40,6 +48,7 @@
     "qunit": "^2.9.3",
     "ts-jest": "^29.2.5",
     "tsx": "^4.19.2",
+    "turbo": "^2.3.3",
     "typescript-eslint": "^8.12.2"
   },
   "cds": {
@@ -147,9 +156,12 @@
     "app/travel_analytics"
   ],
   "workspaces": [
-    "app/*"
+    "app/*",
+    "app-deployer"
   ],
   "imports": {
     "#cds-models/*": "./@cds-models/*/index.js"
-  }
+  },
+  "packageManager": "npm@10.8.1"
+
 }

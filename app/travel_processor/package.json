@@ -7,14 +7,17 @@
     "node": ">=18"
   },
   "scripts": {
-    "build": "ui5 build preload --clean-dest --include-task=generateCachebusterInfo",
+    "build:cf": "ui5 build preload --clean-dest --include-task=generateCachebusterInfo",
     "start": "ui5 serve",
     "test": "npm run test:node && npm run test:java",
     "test:java": "karma start --server=java --single-run",
     "test:node": "karma start --server=node --single-run",
     "ts-typecheck": "tsc --noEmit",
     "prestart": "npm run ts-typecheck",
-    "prebuild": "npm run ts-typecheck",
+    "copyToGenApp": "mkdir -p ../../app-deployer/gen/app/ && cp dist/*.zip ../../app-deployer/gen//app/",
+    "postbuild:cf": "turbo run versionbump && npm run copyToGenApp",
+    "versionbump": "npx ui5-bump patch dist/manifest.json",
+
     "deploy-config": "npx -p @sap/ux-ui5-tooling fiori add deploy-config cf"
   },
   "keywords": [
@@ -35,6 +38,7 @@
     "karma-ui5-transpile": "^3.5.1",
     "puppeteer": "^23.0.2",
     "typescript": "^5.1.6",
+    "ui5-bump-version": "^1.1.0",
     "ui5-middleware-simpleproxy": "^3.2.16",
     "ui5-task-zipper": "^3.1.4",
     "ui5-tooling-transpile": "^3.3.7"
