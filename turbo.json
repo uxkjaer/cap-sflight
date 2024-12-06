@@ -22,9 +22,9 @@
       "outputLogs": "new-only"
     },
     "//#deploy-app": {
-      "inputs": ["app-deployer/gen/app/**"],
+      "inputs": ["app/app-deployer/gen/app/**"],
       "dependsOn": ["travel-processor#build", "travel-analytics#build"],
-      "outputs": ["app-deployer/mta_archives/**"],
+      "outputs": ["app/app-deployer/mta_archives/**"],
       "cache": true,
       "outputLogs": "new-only"
     },

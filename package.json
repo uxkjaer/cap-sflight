@@ -19,9 +19,9 @@
     "travel-analytics": "cds-tsx watch --open sap.fe.cap.travel_analytics/index.html?sap-ui-xx-viewCache=false",
     "buildCDS": " npx -p @sap/cds-dk cds build --profile production,node",
     "deploy-db": "cf push -f manifest-db.yml ",
-    "deploy-app": "npm run deploy --workspace=app-deployer",
+    "deploy-app": "npm run deploy --workspace=app --if-present",
     "deploy-srv": "cf push -f manifest-srv.yml",
-    "deployTurbo": "turbo run deploy-db deploy-srv app-deployer#deploy",
+    "deployTurbo": "turbo run deploy-db deploy-srv deploy-app",
     "buildApps": "npm run build:cf --workspaces --if-present"
   },
   "dependencies": {
@@ -156,8 +156,7 @@
     "app/travel_analytics"
   ],
   "workspaces": [
-    "app/*",
-    "app-deployer"
+    "app/*"
   ],
   "imports": {
     "#cds-models/*": "./@cds-models/*/index.js"
